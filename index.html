@@ -1,0 +1,1298 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>The Creative | Packaging Design</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #2F3C7E;
+            --primary-light: #4a5ab3;
+            --accent: #FBEAEB;
+            --background: #F2F2F2;
+            --text: #333333;
+            --text-light: #666666;
+            --white: #ffffff;
+            --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.08);
+            --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.12);
+            --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.16);
+            --radius-sm: 8px;
+            --radius-md: 12px;
+            --radius-lg: 16px;
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Helvetica Neue', sans-serif;
+            display: flex;
+            background-color: var(--background);
+            color: var(--text);
+            position: relative;
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* Particle canvas (background animation) */
+        #particles-js {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+        }
+
+        /* --- Sidebar Glassmorphism Navy Blue --- */
+        .sidebar {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            height: 100vh;
+            width: 240px;
+            background: rgba(22, 34, 66, 0.85); /* Navy blue with glass effect */
+            color: white;
+            position: fixed;
+            left: 0;
+            top: 0;
+            z-index: 10;
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.18);
+            padding: 32px 0 0 0;
+            backdrop-filter: blur(18px) saturate(180%);
+            -webkit-backdrop-filter: blur(18px) saturate(180%);
+            border-right: 1.5px solid rgba(255,255,255,0.18);
+        }
+
+        /* --- Logo --- */
+        .logo {
+            width: 160px;
+            margin-bottom: 40px;
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-sm);
+        }
+
+        /* --- Navigation --- */
+        nav {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        nav a {
+            position: relative;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: white;
+            text-decoration: none;
+            font-size: 1.13rem;
+            padding: 12px 32px 12px 36px;
+            border-radius: 0 30px 30px 0;
+            transition: background 0.25s, color 0.25s, transform 0.2s;
+            overflow: hidden;
+            backdrop-filter: blur(2px);
+        }
+
+        nav a.active,
+        nav a:focus {
+            background: rgba(255,255,255,0.18);
+            color: var(--accent);
+            box-shadow: 0 4px 24px 0 rgba(255,255,255,0.10);
+            border-left: 4px solid var(--accent);
+            transform: translateX(8px) scale(1.03);
+        }
+
+        nav a:hover {
+            background: rgba(255,255,255,0.13);
+            color: var(--accent);
+            transform: translateX(8px) scale(1.03);
+        }
+
+        /* --- Social Media Icons: Glass, Centered, Two Rows --- */
+        .sidebar-social {
+            margin-top: auto;
+            margin-bottom: 32px;
+            width: 100%;
+  
+            grid-template-columns: repeat(3, 1fr);
+            grid-template-rows: repeat(2, 48px);
+            gap: 25px 10px;
+            justify-items: center;
+            align-items: center;
+            padding: 0;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .sidebar-social a {
+            width: 54px;
+            height: 54px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            justify-items: center;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.18);
+            color: white;
+            font-size: 1.35rem;
+            box-shadow: 0 2px 8px rgba(22,34,66,0.07);
+            transition: background 0.25s, color 0.25s, transform 0.18s;
+            backdrop-filter: blur(4px);
+        }
+
+        .sidebar-social a:hover {
+            background: var(--accent);
+            color: var(--primary);
+            transform: translateY(-4px) scale(1.08);
+        }
+
+        /* Center the two icons in the second row if only two */
+        .sidebar-social a:nth-child(4) {
+            grid-column: 2 / 2;
+        }
+        .sidebar-social a:nth-child(5) {
+            grid-column: 3 / 4;
+        }
+
+        .main {
+            margin-left: 250px;
+            padding: 40px;
+            width: calc(100% - 250px);
+            position: relative;
+            z-index: 1;
+        }
+
+        .section {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            padding: 60px 0;
+        }
+
+        .section-header {
+            margin-bottom: 40px;
+            text-align: center;
+            width: 100%;
+        }
+
+        .section-header h2 {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 15px;
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-header h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: var(--primary);
+            border-radius: 2px;
+        }
+
+        .section-header p {
+            font-size: 1.1rem;
+            color: var(--text-light);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        /* Home Section */
+        .home-left {
+            flex: 1;
+            padding: 20px;
+        }
+
+        .home-left h1 {
+            font-size: 3.5rem;
+            color: var(--primary);
+            margin-bottom: 20px;
+            line-height: 1.2;
+        }
+
+        .home-left p {
+            font-size: 1.2rem;
+            line-height: 1.6;
+            color: var(--text-light);
+            margin-bottom: 30px;
+        }
+
+        .home-buttons {
+            margin-top: 30px;
+            display: flex;
+            gap: 20px;
+        }
+
+        .btn {
+            background-color: var(--primary);
+            color: white;
+            padding: 12px 24px;
+            text-decoration: none;
+            font-weight: bold;
+            border-radius: var(--radius-sm);
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .btn:hover {
+            background-color: var(--primary-light);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+        }
+
+        .btn-outline:hover {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        .home-right {
+            flex: 1;
+            text-align: center;
+            position: relative;
+            perspective: 1000px;
+        }
+
+        .owner-img {
+            max-width: 350px;
+            height: auto;
+            border-radius: var(--radius-lg);
+            object-fit: cover;
+            box-shadow: var(--shadow-lg);
+            transition: var(--transition);
+            border: 8px solid var(--white);
+        }
+
+        .home-right:hover .owner-img {
+            transform: rotateY(15deg) rotateX(15deg);
+        }
+
+        /* Portfolio Section */
+        .portfolio-container {
+            width: 100%;
+        }
+
+        .portfolio-filter {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: 8px 20px;
+            background: var(--white);
+            border: 1px solid #e0e0e0;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: var(--transition);
+            font-weight: 500;
+        }
+
+        .filter-btn:hover, .filter-btn.active {
+            background: var(--primary);
+            color: var(--white);
+            border-color: var(--primary);
+        }
+
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 20px;
+        }
+
+        .card {
+            background: var(--white);
+            border-radius: var(--radius-md);
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .card-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: var(--primary);
+            color: var(--white);
+            padding: 5px 12px;
+            border-radius: 30px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            z-index: 2;
+        }
+
+        .upload-area {
+            display: block;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card-img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            transition: var(--transition);
+        }
+
+        .card:hover .card-img {
+            transform: scale(1.05);
+        }
+
+        .card-content {
+            padding: 25px;
+        }
+
+        .card-content h3 {
+            font-size: 1.3rem;
+            margin-bottom: 12px;
+            color: var(--primary);
+        }
+
+        .card-content p {
+            font-size: 0.95rem;
+            margin-bottom: 20px;
+            color: var(--text-light);
+        }
+
+        .card-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 15px;
+            border-top: 1px solid #f0f0f0;
+        }
+
+        .card-tags {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .tag {
+            background: var(--accent);
+            color: var(--primary);
+            padding: 4px 10px;
+            border-radius: 30px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .view-project {
+            color: var(--primary);
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            transition: var(--transition);
+        }
+
+        .view-project:hover {
+            color: var(--primary-light);
+            gap: 8px;
+        }
+
+        /* Process Section */
+        .process-container {
+            width: 100%;
+        }
+
+        .process-timeline {
+            position: relative;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 40px 0;
+        }
+
+        .process-timeline::before {
+            content: '';
+            position: absolute;
+            width: 4px;
+            background: linear-gradient(to bottom, var(--primary), var(--accent));
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            border-radius: 10px;
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 50px;
+            width: 100%;
+        }
+
+        .timeline-item:nth-child(odd) {
+            padding-right: calc(50% + 30px);
+            text-align: right;
+        }
+
+        .timeline-item:nth-child(even) {
+            padding-left: calc(50% + 30px);
+        }
+
+        .timeline-icon {
+            position: absolute;
+            left: 50%;
+            top: 0;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: var(--white);
+            border: 4px solid var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.2rem;
+            color: var(--primary);
+            box-shadow: var(--shadow-sm);
+            z-index: 2;
+        }
+
+        .timeline-content {
+            background: var(--white);
+            padding: 30px;
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .timeline-item:hover .timeline-content {
+            box-shadow: var(--shadow-md);
+            transform: translateY(-5px);
+        }
+
+        .timeline-content h3 {
+            margin-top: 0;
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+            color: var(--primary);
+        }
+
+        .timeline-content p {
+            margin: 0;
+            font-size: 1rem;
+            color: var(--text-light);
+        }
+
+        .timeline-content::before {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: var(--white);
+            top: 20px;
+            transform: rotate(45deg);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .timeline-item:nth-child(odd) .timeline-content::before {
+            right: -10px;
+        }
+
+        .timeline-item:nth-child(even) .timeline-content::before {
+            left: -10px;
+        }
+
+        /* Contact Section */
+        .contact-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .contact-header h2 {
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+
+        .contact-header p {
+            font-size: 1.1rem;
+            margin-bottom: 30px;
+            color: var(--text-light);
+        }
+
+        .contact-content {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 40px;
+        }
+
+        .contact-details {
+            flex: 1 1 40%;
+            font-size: 0.95rem;
+            color: var(--text);
+        }
+
+        .contact-details a {
+            color: var(--primary);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .contact-details a:hover {
+            color: var(--primary-light);
+        }
+
+        .contact-details .social-links {
+            margin-top: 15px;
+        }
+
+        .contact-details .social-links a {
+            display: inline-block;
+            margin-right: 15px;
+            font-weight: bold;
+            color: var(--primary);
+        }
+
+        .contact-form {
+            flex: 1 1 55%;
+        }
+
+        .contact-form form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .contact-form input,
+        .contact-form select,
+        .contact-form textarea {
+            padding: 12px;
+            font-size: 1rem;
+            border: 1px solid #ddd;
+            border-radius: var(--radius-sm);
+            width: 100%;
+            transition: var(--transition);
+        }
+
+        .contact-form input:focus,
+        .contact-form select:focus,
+        .contact-form textarea:focus {
+            border-color: var(--primary);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(47, 60, 126, 0.1);
+        }
+
+        .contact-form button {
+            background-color: var(--primary);
+            color: white;
+            padding: 12px;
+            border: none;
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            font-weight: bold;
+            transition: var(--transition);
+            margin-top: 10px;
+        }
+
+        .contact-form button:hover {
+            background-color: var(--primary-light);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        /* Footer Styling */
+        .footer {
+            background-color: var(--white);
+            padding: 60px 20px 30px;
+            margin-top: 60px;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: auto;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 40px;
+        }
+
+        .footer-about,
+        .footer-links,
+        .footer-social {
+            flex: 1 1 30%;
+        }
+
+        .footer h4 {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            color: var(--primary);
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .footer h4::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 40px;
+            height: 3px;
+            background: var(--primary);
+        }
+
+        .footer p,
+        .footer ul,
+        .footer a {
+            font-size: 0.95rem;
+            color: var(--text-light);
+            text-decoration: none;
+        }
+
+        .footer ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .footer ul li {
+            margin-bottom: 12px;
+        }
+
+        .footer ul li a {
+            transition: var(--transition);
+            display: inline-block;
+        }
+
+        .footer ul li a:hover {
+            color: var(--primary);
+            transform: translateX(5px);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            margin-top: 60px;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+
+        /* Responsive Layout */
+        @media (max-width: 992px) {
+            .timeline-item:nth-child(odd),
+            .timeline-item:nth-child(even) {
+                padding: 0 0 0 60px;
+                text-align: left;
+            }
+            
+            .process-timeline::before {
+                left: 30px;
+            }
+            
+            .timeline-icon {
+                left: 30px;
+            }
+            
+            .timeline-content::before {
+                left: -10px !important;
+                right: auto !important;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .main {
+                margin-left: 0;
+                width: 100%;
+                padding: 20px;
+            }
+
+            .sidebar {
+                display: none;
+            }
+
+            .section {
+                flex-direction: column;
+                padding: 40px 0;
+            }
+
+            .home-right {
+                margin-top: 30px;
+            }
+
+            .home-left h1 {
+                font-size: 2.5rem;
+            }
+
+            .section-header h2 {
+                font-size: 2rem;
+            }
+
+            .contact-content {
+                flex-direction: column;
+            }
+
+            .footer-about,
+            .footer-links,
+            .footer-social {
+                flex: 1 1 100%;
+                margin-bottom: 30px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Particle.js Background Animation -->
+    <div id="particles-js"></div>
+
+    <!-- Sidebar Navigation -->
+    <div class="sidebar">
+        <img src="logo3.jpg" alt="Logo" class="logo" />
+        <nav>
+            <a href="#home" class="menu-item">Home</a>
+            <a href="#portfolio" class="menu-item">Portfolio</a>
+            <a href="#process" class="menu-item">Process</a>
+            <a href="#contact" class="menu-item">Contact</a>
+        </nav>
+
+        <!-- Social Media Icons -->
+        <div class="sidebar-social">
+            <a href="https://instagram.com/thecreative" target="_blank" aria-label="Instagram">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" width="24" height="24" fill="white">
+                    <path d="M224.1 141c-63.6 0-114.9 51.3-114.9 114.9s51.3 114.9 114.9 114.9 114.9-51.3 114.9-114.9S287.7 141 224.1 141zm0 186.6c-39.6 0-71.7-32.1-71.7-71.7s32.1-71.7 71.7-71.7 71.7 32.1 71.7 71.7-32.1 71.7-71.7 71.7zm146.4-194.3c0 14.9-12 26.9-26.9 26.9s-26.9-12-26.9-26.9 12-26.9 26.9-26.9 26.9 12 26.9 26.9zm76.1 27.2c-.7-14.9-4.1-29.8-10.1-43.5-6.2-14.3-15.1-27.3-26.3-38.5s-24.2-20.1-38.5-26.3c-13.7-6-28.6-9.4-43.5-10.1-14.9-.7-59.6-.7-74.5 0-14.9.7-29.8 4.1-43.5 10.1-14.3 6.2-27.3 15.1-38.5 26.3s-20.1 24.2-26.3 38.5c-6 13.7-9.4 28.6-10.1 43.5-.7 14.9-.7 59.6 0 74.5.7 14.9 4.1 29.8 10.1 43.5 6.2 14.3 15.1 27.3 26.3 38.5s24.2 20.1 38.5 26.3c13.7 6 28.6 9.4 43.5 10.1 14.9.7 59.6.7 74.5 0 14.9-.7 29.8-4.1 43.5-10.1 14.3-6.2 27.3-15.1 38.5-26.3s20.1-24.2 26.3-38.5c6-13.7 9.4-28.6 10.1-43.5.7-14.9.7-59.6 0-74.5zm-48.1 218c-7.8 19.6-23 35.8-42.6 43.6-29.5 11.8-99.5 9-132.8 9s-103.3 2.8-132.8-9c-19.6-7.8-35.8-23-43.6-42.6-11.8-29.5-9-99.5-9-132.8s-2.8-103.3 9-132.8c7.8-19.6 23-35.8 42.6-43.6 29.5-11.8 99.5-9 132.8-9s103.3-2.8 132.8 9c19.6 7.8 35.8 23 43.6 42.6 11.8 29.5 9 99.5 9 132.8s2.8 103.3-9 132.8z"/>
+                </svg>
+            </a>
+            <a href="https://facebook.com/thecreative" target="_blank" aria-label="Facebook">
+                <i class="fab fa-facebook-f"></i>
+            </a>
+            <a href="https://line.me/R/ti/p/@thecreative" target="_blank" aria-label="Line">
+                <i class="fab fa-line"></i>
+            </a>
+            <a href="tel:0954415559" aria-label="Phone">
+                <i class="fas fa-phone"></i>
+            </a>
+            <a href="mailto:info@thecreative.com" aria-label="Email">
+                <i class="fas fa-envelope"></i>
+            </a>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main">
+        <!-- Home Section -->
+        <section class="section" id="home">
+            <div class="home-left">
+                <h1>The Creative</h1>
+                <p>
+                    At The Creative, we are dedicated to designing packaging that tells your brand's story. Our approach
+                    is centered on innovation, sustainability, and creating impactful designs that resonate with your
+                    audience. Whether you're launching a new product or refreshing an existing one, we ensure your
+                    packaging leaves a lasting impression.
+                </p>
+                <div class="home-buttons">
+                    <a href="#portfolio" class="btn">View Portfolio</a>
+                    <a href="#contact" class="btn btn-outline">Contact Us</a>
+                </div>
+            </div>
+            <div class="home-right">
+                <img src="owner.jpg" alt="Owner" class="owner-img" />
+            </div>
+        </section>
+
+        <!-- Portfolio Section -->
+        <section class="section" id="portfolio">
+            <div class="portfolio-container">
+                <div class="section-header">
+                    <h2>Our Portfolio</h2>
+                    <p>
+                        Discover our diverse portfolio of packaging designs that showcase our creativity and commitment to
+                        excellence. From minimalistic designs to vibrant, attention-grabbing solutions, we create packaging
+                        that reflects your brand identity and engages your customers.
+                    </p>
+                </div>
+
+                <div class="portfolio-filter">
+                    <button class="filter-btn active">All Projects</button>
+                    <button class="filter-btn">Food & Beverage</button>
+                    <button class="filter-btn">Beauty & Cosmetics</button>
+                    <button class="filter-btn">Health & Wellness</button>
+                    <button class="filter-btn">Luxury</button>
+                </div>
+
+                <!-- Card Grid -->
+                <div class="card-grid">
+                    <!-- Card 1 -->
+                    <div class="card">
+                        <span class="card-badge">New</span>
+                        <label for="img1" class="upload-area">
+                            <input type="file" id="img1" accept="image"/>
+                            <img src="https://images.unsplash.com/photo-1550583724-b2692b85b150?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80" alt="Project Image" class="card-img" />
+                        </label>
+                        <div class="card-content">
+                            <h3>Organic Tea Collection</h3>
+                            <p>Eco-friendly packaging for a premium organic tea brand, featuring minimalist design and sustainable materials.</p>
+                            <div class="card-footer">
+                                <div class="card-tags">
+                                    <span class="tag">Food</span>
+                                    <span class="tag">Eco</span>
+                                </div>
+                                <a href="#" class="view-project">
+                                    View Project
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card 2 -->
+                    <div class="card">
+                        <label for="img2" class="upload-area">
+                            <input type="file" id="img2" accept="image"  />
+                            <img src="https://images.unsplash.com/photo-1592078615290-033ee584e267?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1528&q=80" alt="Project Image" class="card-img" />
+                        </label>
+                        <div class="card-content">
+                            <h3>Luxury Skincare Line</h3>
+                            <p>Premium glass packaging with gold accents for a high-end skincare collection.</p>
+                            <div class="card-footer">
+                                <div class="card-tags">
+                                    <span class="tag">Beauty</span>
+                                    <span class="tag">Luxury</span>
+                                </div>
+                                <a href="#" class="view-project">
+                                    View Project
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card 3 -->
+                    <div class="card">
+                        <label for="img3" class="upload-area">
+                            <input type="file" id="img3" accept="image"  />
+                            <img src="https://images.unsplash.com/photo-1631729371254-42c2892f0e6e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Project Image" class="card-img" />
+                        </label>
+                        <div class="card-content">
+                            <h3>Craft Beer Series</h3>
+                            <p>Vibrant label designs for a craft brewery's seasonal beer collection.</p>
+                            <div class="card-footer">
+                                <div class="card-tags">
+                                    <span class="tag">Beverage</span>
+                                    <span class="tag">Illustration</span>
+                                </div>
+                                <a href="#" class="view-project">
+                                    View Project
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card 4 -->
+                    <div class="card">
+                        <label for="img4" class="upload-area">
+                            <input type="file" id="img4" accept="image" />
+                            <img src="https://images.unsplash.com/photo-1619451334790-c5d5a19670e3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Project Image" class="card-img" />
+                        </label>
+                        <div class="card-content">
+                            <h3>Vegan Chocolate Bars</h3>
+                            <p>Playful yet sophisticated packaging for a vegan chocolate brand.</p>
+                            <div class="card-footer">
+                                <div class="card-tags">
+                                    <span class="tag">Food</span>
+                                    <span class="tag">Vegan</span>
+                                </div>
+                                <a href="#" class="view-project">
+                                    View Project
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card 5 -->
+                    <div class="card">
+                        <span class="card-badge">Featured</span>
+                        <label for="img5" class="upload-area">
+                            <input type="file" id="img5" accept="image" />
+                            <img src="https://images.unsplash.com/photo-1625772452859-1c03d5bf1137?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Project Image" class="card-img" />
+                        </label>
+                        <div class="card-content">
+                            <h3>Mineral Water Bottles</h3>
+                            <p>Sleek, ergonomic bottle design for a premium mineral water brand.</p>
+                            <div class="card-footer">
+                                <div class="card-tags">
+                                    <span class="tag">Beverage</span>
+                                    <span class="tag">Luxury</span>
+                                </div>
+                                <a href="#" class="view-project">
+                                    View Project
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card 6 -->
+                    <div class="card">
+                        <label for="img6" class="upload-area">
+                            <input type="file" id="img6" accept="image" />
+                            <img src="https://images.unsplash.com/photo-1594035910387-fea47794261f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1528&q=80" alt="Project Image" class="card-img" />
+                        </label>
+                        <div class="card-content">
+                            <h3>Essential Oil Set</h3>
+                            <p>Elegant apothecary-style packaging for a therapeutic essential oil collection.</p>
+                            <div class="card-footer">
+                                <div class="card-tags">
+                                    <span class="tag">Wellness</span>
+                                    <span class="tag">Luxury</span>
+                                </div>
+                                <a href="#" class="view-project">
+                                    View Project
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- View All Projects Button -->
+                <div style="margin-top: 60px; text-align: center;">
+                    <a href="#" class="btn">View All Projects</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Process Section -->
+        <section class="section" id="process">
+            <div class="process-container">
+                <div class="section-header">
+                    <h2>Our Process</h2>
+                    <p>
+                        At The Creative, our process is designed to bring your vision to life. We begin by understanding
+                        your brand's goals and target audience. Then, we create unique and sustainable packaging solutions
+                        that align with your objectives.
+                    </p>
+                </div>
+
+                <div class="process-timeline">
+                    <!-- Step 1 -->
+                    <div class="timeline-item">
+                        <div class="timeline-icon">1</div>
+                        <div class="timeline-content">
+                            <h3>Discovery</h3>
+                            <p>We start by understanding your brand, target audience, and market positioning. This phase
+                                involves research, competitor analysis, and defining clear design objectives that align
+                                with your business goals.</p>
+                        </div>
+                    </div>
+
+                    <!-- Step 2 -->
+                    <div class="timeline-item">
+                        <div class="timeline-icon">2</div>
+                        <div class="timeline-content">
+                            <h3>Concept Development</h3>
+                            <p>Our creative team develops multiple design concepts based on the insights gathered. We
+                                explore different approaches, materials, and techniques to create packaging solutions
+                                that are both functional and visually appealing.</p>
+                        </div>
+                    </div>
+
+                    <!-- Step 3 -->
+                    <div class="timeline-item">
+                        <div class="timeline-icon">3</div>
+                        <div class="timeline-content">
+                            <h3>Refinement</h3>
+                            <p>After selecting the most promising concept, we refine every detail of the design. This
+                                includes finalizing colors, typography, imagery, and structural elements to ensure the
+                                packaging effectively communicates your brand message.</p>
+                        </div>
+                    </div>
+
+                    <!-- Step 4 -->
+                    <div class="timeline-item">
+                        <div class="timeline-icon">4</div>
+                        <div class="timeline-content">
+                            <h3>Production</h3>
+                            <p>We prepare the final artwork and specifications for manufacturing, working closely with
+                                production partners to ensure quality and consistency. Our team oversees the process
+                                from prototyping to final production.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        
+        <!-- Contact Section -->
+        <section class="section" id="contact">
+            <div class="contact-container">
+                <div class="contact-header">
+                    <h2>Contact Us</h2>
+                    <p>
+                        We'd love to hear from you. Whether you're interested in discussing a project or have a
+                        question,
+                        feel free to reach out. Our team is ready to help bring your packaging vision to life.
+                    </p>
+                </div>
+
+                <div class="contact-content">
+                    <div class="contact-details">
+                        <h3>Get In Touch</h3>
+                        <p><strong>Phone:</strong> <a href="tel:0954415559">095-4415559</a></p>
+                        <p><strong>Email:</strong> <a href="mailto:info@thecreative.com">info@thecreative.com</a></p>
+                        <p><strong>Instagram:</strong> <a href="https://instagram.com/thecreative"
+                                target="_blank">@thecreative</a></p>
+
+                        <h3>Office Hours</h3>
+                        <p>Monday - Friday: 9:00 AM - 6:00 PM</p>
+                        <p>We're based in Bangkok, Thailand but work with clients worldwide.</p>
+
+                        <div class="social-links">
+                            <a href="https://instagram.com/thecreative" target="_blank">Instagram</a>
+                            <a href="https://twitter.com/thecreative" target="_blank">Twitter</a>
+                            <a href="https://facebook.com/thecreative" target="_blank">Facebook</a>
+                        </div>
+                    </div>
+
+                    <div class="contact-form">
+                        <h3>Send a Message</h3>
+                        <form>
+                            <input type="text" placeholder="Your name" required>
+                            <input type="email" placeholder="Your email" required>
+                            <select required>
+                                <option disabled selected>Select project type</option>
+                                <option>Packaging Design</option>
+                                <option>Branding</option>
+                                <option>Consultation</option>
+                            </select>
+                            <textarea placeholder="Tell us about your project" rows="5" required></textarea>
+                            <button type="submit">Send Message</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="footer-content">
+                <div class="footer-about">
+                    <h4>The Creative</h4>
+                    <p>A packaging design agency dedicated to creating memorable brand experiences through innovative
+                        and sustainable design solutions.</p>
+                </div>
+                <div class="footer-links">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#portfolio">Portfolio</a></li>
+                        <li><a href="#process">Process</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-social">
+                    <h4>Connect</h4>
+                    <a href="https://instagram.com/thecreative" target="_blank">Instagram</a>
+                    <a href="https://twitter.com/thecreative" target="_blank">Twitter</a>
+                    <a href="https://facebook.com/thecreative" target="_blank">Facebook</a>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Particle.js Script -->
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <script>
+        // Initialize Particle.js
+        particlesJS("particles-js", {
+            "particles": {
+                "number": {
+                    "value": 80,
+                    "density": {
+                        "enable": true,
+                        "value_area": 800
+                    }
+                },
+                "color": {
+                    "value": ["#2F3C7E", "#FBEAEB"] // Match your theme
+                },
+                "shape": {
+                    "type": "circle",
+                    "stroke": {
+                        "width": 0,
+                        "color": "#000000"
+                    }
+                },
+                "opacity": {
+                    "value": 0.5,
+                    "random": true,
+                    "anim": {
+                        "enable": true,
+                        "speed": 1,
+                        "opacity_min": 0.1,
+                        "sync": false
+                    }
+                },
+                "size": {
+                    "value": 3,
+                    "random": true,
+                    "anim": {
+                        "enable": false,
+                        "speed": 40,
+                        "size_min": 0.1,
+                        "sync": false
+                    }
+                },
+                "line_linked": {
+                    "enable": true,
+                    "distance": 150,
+                    "color": "#2F3C7E",
+                    "opacity": 0.4,
+                    "width": 1
+                },
+                "move": {
+                    "enable": true,
+                    "speed": 2,
+                    "direction": "none",
+                    "random": true,
+                    "straight": false,
+                    "out_mode": "out",
+                    "bounce": false,
+                    "attract": {
+                        "enable": false,
+                        "rotateX": 600,
+                        "rotateY": 1200
+                    }
+                }
+            },
+            "interactivity": {
+                "detect_on": "canvas",
+                "events": {
+                    "onhover": {
+                        "enable": true,
+                        "mode": "grab"
+                    },
+                    "onclick": {
+                        "enable": true,
+                        "mode": "push"
+                    },
+                    "resize": true
+                },
+                "modes": {
+                    "grab": {
+                        "distance": 140,
+                        "line_linked": {
+                            "opacity": 1
+                        }
+                    },
+                    "push": {
+                        "particles_nb": 4
+                    }
+                }
+            },
+            "retina_detect": true
+        });
+
+        // 3D Image Interaction
+        const ownerImage = document.querySelector('.owner-img');
+        ownerImage.addEventListener('mousemove', (e) => {
+            const { clientX: mouseX, clientY: mouseY } = e;
+            const rect = ownerImage.getBoundingClientRect();
+            const imageCenterX = rect.left + rect.width / 2;
+            const imageCenterY = rect.top + rect.height / 2;
+
+            const rotateX = (mouseY - imageCenterY) / 20;
+            const rotateY = (mouseX - imageCenterX) / 20;
+
+            ownerImage.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+        });
+
+        ownerImage.addEventListener('mouseleave', () => {
+            ownerImage.style.transform = 'rotateX(0deg) rotateY(0deg)';
+        });
+
+        // filepath: /Users/aniruddhakadam/Documents/Projects/TheCreative/nnn.html
+        // Get all menu links and section IDs
+        const menuLinks = document.querySelectorAll('.sidebar nav a');
+        const sectionIds = Array.from(menuLinks).map(link => link.getAttribute('href')).filter(href => href.startsWith('#'));
+        const sections = sectionIds.map(id => document.querySelector(id));
+
+        // Highlight menu on scroll
+        function onScroll() {
+            let scrollPos = window.scrollY || window.pageYOffset;
+            let offset = 120; // adjust if you have a fixed header
+
+            let activeIndex = 0;
+            sections.forEach((section, idx) => {
+                if (section && section.offsetTop - offset <= scrollPos) {
+                    activeIndex = idx;
+                }
+            });
+
+            menuLinks.forEach((link, idx) => {
+                if (idx === activeIndex) {
+                    link.classList.add('active');
+                } else {
+                    link.classList.remove('active');
+                }
+            });
+        }
+
+        // Manual selection on click
+        menuLinks.forEach(link => {
+            link.addEventListener('click', function() {
+                menuLinks.forEach(l => l.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
+
+        // Listen to scroll
+        window.addEventListener('scroll', onScroll);
+        // Initial highlight
+        onScroll();
+    </script>
+</body>
+</html>
